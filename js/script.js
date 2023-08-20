@@ -1,8 +1,18 @@
 const productList = document.querySelector('.productList');
 
+const loader = document.querySelector('.loader');
+
+const searchField = document.querySelector('#search'); 
+
+searchField.addEventListener('input',(e)=>{
+    console.log(e);
+})
 
 const displayProducts = async () => {
     const products = await fetchProducts();
+    //hide the loader
+    loader.style.display = "none";
+
     products.forEach((productData)=>{
         const product = createProduct(productData);
         productList.appendChild(product);
