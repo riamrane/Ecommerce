@@ -39,6 +39,7 @@ const displayProducts = (products) => {
 function createProduct(productData) {
     const product = document.createElement('div');
     product.className = 'product';
+    product.id = "product"+productData.id;
 
     const productImage = document.createElement('div');
     productImage.className = "productImage";
@@ -57,17 +58,22 @@ function createProduct(productData) {
     const p = document.createElement("p");
     const h5 = document.createElement("h5");
     const span = document.createElement("span");
+    const  btn = document.createElement("button");
 
     h3.innerText = productData.title;
     p.innerText = productData.description;
     span.innerText = productData.rating;
     h5.innerText = "₹" + productData.price;
+    btn.innerText = "Delete Product";
+    btn.className = "btn";
+
+    btn.onclick = () => onDeleteProduct(productData.id);
 
     productDetails.append(h3);
     productDetails.append(p);
     productDetails.append(span);
     productDetails.append(h5);
-
+    productDetails.appendChild(btn);
     product.appendChild(productImage);
     product.appendChild(productDetails);
 
@@ -83,3 +89,14 @@ const fetchProducts = async () => {
 
 displayHomePage();
 
+const onDeleteProduct = (id)=>{
+
+    // backend API call to delete 
+    // const productToDelete = document.querySelector(`#product${id}`);
+    // productToDelete.style.display = "none";
+
+    const filteredProducts = allProducts.filter((product) => {
+       return product.id !== id;
+    })
+    displayProducts(filteredProducts);
+}
