@@ -15,12 +15,12 @@ header .header-box{
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2px;
+    gap: 5px;
 }
 header form{
     border: 3px solid white;
     width: 30%;
-    min-width: 100px;
+    min-width: 200px;
     height: 40px;
 }
 header form input{
