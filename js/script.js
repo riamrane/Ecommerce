@@ -2,34 +2,51 @@ const productList = document.querySelector('.productList');
 
 const loader = document.querySelector('.loader');
 
-const searchField = document.querySelector('#search'); 
+const searchField = document.querySelector('#search');
 
-searchField.addEventListener('input',(e)=>{
-    console.log(e);
+let allProducts;
+
+searchField.addEventListener('input', (e) => {
+    const search = e.target.value.toLowerCase();
+    const filteredProducts = allProducts.filter((product) => {
+        const title = product.title.toLowerCase();
+        return title.startsWith(search);
+    })
+    displayProducts(filteredProducts);
 })
 
-const displayProducts = async () => {
-    const products = await fetchProducts();
+const clearProducts = ()=>{
+    productList.innerHTML = "";
+}
+
+const displayHomePage = async () => {
     //hide the loader
     loader.style.display = "none";
+    const products = await fetchProducts();
+    allProducts = products;
+    displayProducts(products);
+}
 
-    products.forEach((productData)=>{
+const displayProducts = (products) => {
+
+    clearProducts();
+    products.forEach((productData) => {
         const product = createProduct(productData);
         productList.appendChild(product);
     })
 }
 
-function createProduct(productData){
+function createProduct(productData) {
     const product = document.createElement('div');
-    product.className = 'product'; 
-    
+    product.className = 'product';
+
     const productImage = document.createElement('div');
     productImage.className = "productImage";
 
     const productDetails = document.createElement('div');
     productDetails.className = "productDetails";
 
-    const  img = document.createElement('img');
+    const img = document.createElement('img');
     img.setAttribute("src", productData.thumbnail);
     img.setAttribute("height", "100%");
     img.setAttribute("width", "100%");
@@ -64,5 +81,5 @@ const fetchProducts = async () => {
     return productsJSON.products;
 }
 
-displayProducts();
+displayHomePage();
 
